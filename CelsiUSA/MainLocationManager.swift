@@ -57,7 +57,7 @@ class WeatherViewModel: ObservableObject {
     private var locationManager: LocationManager
     private var cancellables = Set<AnyCancellable>()
     private var lastUpdateTime: Date?
-    private let updateInterval: TimeInterval = 60 // 1 minute
+    private let updateInterval: TimeInterval = 300
 
     init(locationManager: LocationManager) {
         self.locationManager = locationManager
