@@ -8,13 +8,14 @@
 import Foundation
 import CoreLocation
 import WeatherKit
+import Combine
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-
     private let locationManager = CLLocationManager()
     
     @Published var location: CLLocation?
     @Published var authorizationStatus: CLAuthorizationStatus
+    var onLocationUpdate: ((CLLocation) -> Void)?
 
     override init() {
         authorizationStatus = locationManager.authorizationStatus
@@ -27,7 +28,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
   
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        location = locations.last
+        if let location = locations.last {
+            self.location = location
+            onLocationUpdate?(location)
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -41,29 +45,56 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
 
 
+import Foundation
+import CoreLocation
+import WeatherKit
+import Combine
+
 class WeatherViewModel: ObservableObject {
-    private let weatherService = WeatherService()
-    @Published var currentWeather: CurrentWeather?
-    @Published var currentLocation: CLLocation?
-    
-    init() {
-        currentLocation = CLLocationManager().location // Assuming you have location data available
-        Task {
-            await getWeather()
-        }
+    private let weatherService = WeatherService.shared
+    @Published var weather: Weather?
+    @Published var isLoading = true
+    private var locationManager: LocationManager
+    private var cancellables = Set<AnyCancellable>()
+    private var lastUpdateTime: Date?
+    private let updateInterval: TimeInterval = 60 // 1 minute
+
+    init(locationManager: LocationManager) {
+        self.locationManager = locationManager
+        
+        locationManager.$location
+            .compactMap { $0 }
+            .sink { [weak self] location in
+                Task { @MainActor in
+                    await self?.fetchWeatherIfNeeded(for: location)
+                }
+            }
+            .store(in: &cancellables)
     }
 
-    func getWeather() async {
+    @MainActor
+    func fetchWeatherIfNeeded(for location: CLLocation) async {
+        guard shouldUpdate() else { return }
+        
+        isLoading = true
         do {
-            let weather = try await weatherService.weather(for: currentLocation ?? CLLocation(latitude: 0.0, longitude: 0.0))
-            self.currentWeather = CurrentWeather(
-                temperature: weather.currentWeather.temperature.value,
-                condition: weather.currentWeather.condition.rawValue,
-                symbolName: weather.currentWeather.symbolName
-            )
+            weather = try await weatherService.weather(for: location)
+            lastUpdateTime = Date()
         } catch {
             print("Failed to get weather: \(error.localizedDescription)")
         }
+        isLoading = false
+    }
+
+    func getWeather() async {
+        if let location = locationManager.location {
+            await fetchWeatherIfNeeded(for: location)
+        }
+    }
+
+    private func shouldUpdate() -> Bool {
+        guard let lastUpdateTime = lastUpdateTime else { return true }
+        return Date().timeIntervalSince(lastUpdateTime) >= updateInterval
     }
 }
 

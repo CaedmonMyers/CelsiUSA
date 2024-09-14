@@ -40,6 +40,8 @@
 
 /* Begin PBXFileReference section */
 		B93441302C4DBA8100D6BA35 /* LightningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightningView.swift; sourceTree = "<group>"; };
+		B93622842C953E9D0040BCE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B93622862C953F8F0040BCE5 /* WeatherKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WeatherKit.framework; path = System/Library/Frameworks/WeatherKit.framework; sourceTree = SDKROOT; };
 		B97800002A4407AB00BDA18D /* StoreKit Config.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "StoreKit Config.storekit"; sourceTree = "<group>"; };
 		B97800012A4407AB00BDA18D /* TestingEnv.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingEnv.swift; sourceTree = "<group>"; };
 		B97800022A4407AB00BDA18D /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -83,10 +85,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B93622852C953F8F0040BCE5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B93622862C953F8F0040BCE5 /* WeatherKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B978FFDF2A44071F00BDA18D = {
 			isa = PBXGroup;
 			children = (
 				B978FFEA2A44071F00BDA18D /* CelsiUSA */,
+				B93622852C953F8F0040BCE5 /* Frameworks */,
 				B978FFE92A44071F00BDA18D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -102,6 +113,7 @@
 		B978FFEA2A44071F00BDA18D /* CelsiUSA */ = {
 			isa = PBXGroup;
 			children = (
+				B93622842C953E9D0040BCE5 /* Info.plist */,
 				B97800392A440CC200BDA18D /* CelsiUSA.entitlements */,
 				B978FFEB2A44071F00BDA18D /* CelsiUSAApp.swift */,
 				B978FFED2A44071F00BDA18D /* ContentView.swift */,
@@ -378,14 +390,17 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = CelsiUSA/CelsiUSA.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"CelsiUSA/Preview Content\"";
 				DEVELOPMENT_TEAM = 47J6H2LHDD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CelsiUSA/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "C Weather";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "CelsiUSA needs your location to provide weather data.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "CelsiUSA needs your location to provide weather data.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "CelsiUSA needs your location to provide weather data.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -412,14 +427,17 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = CelsiUSA/CelsiUSA.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"CelsiUSA/Preview Content\"";
 				DEVELOPMENT_TEAM = 47J6H2LHDD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CelsiUSA/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "C Weather";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "CelsiUSA needs your location to provide weather data.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "CelsiUSA needs your location to provide weather data.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "CelsiUSA needs your location to provide weather data.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
